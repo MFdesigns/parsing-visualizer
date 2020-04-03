@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020 Michel Fäh
+ */
+
 const fileInput = document.getElementById('file-input');
 
 function displayTokens(data) {
