@@ -26,7 +26,10 @@ function displayTokens(data) {
       tokenElement.style.backgroundColor = tokenColor;
       tokenElement.textContent = buffer;
       tokenOutput.appendChild(tokenElement);
-      tokenIndex += 1;
+
+      if (tokenIndex < data.tokens.length - 1) {
+        tokenIndex += 1;
+      }
       buffer = '';
     }
   }
