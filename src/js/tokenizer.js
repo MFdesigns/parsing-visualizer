@@ -2,13 +2,25 @@
  * Copyright (c) 2020 Michel Fäh
  */
 
-const fileInput = document.getElementById('file-input');
+const fileInput = document.getElementsByClassName('file-input')[0];
+
+function displayLineNumbers(numberOfLines) {
+  const sourceLineNumbers = document.getElementsByClassName('source-line-numbers')[0];
+  const maxWidth = numberOfLines.toString().length;
+
+  for (let i = 0; i < numberOfLines; i += 1) {
+    const lineNumber = (i + 1).toString().padStart(maxWidth, ' ');
+    sourceLineNumbers.innerHTML += `${lineNumber}\n`;
+  }
+}
 
 function displayTokens(data) {
-  const tokenOutput = document.getElementById('token-output');
+  const tokenOutput = document.getElementsByClassName('token-output')[0];
 
   let buffer = '';
   let tokenIndex = 0;
+  let numberOfLines = 0;
+
   for (let i = 0; i < data.source.length; i += 1) {
     const char = data.source.charAt(i);
     const token = data.tokens[tokenIndex];
@@ -32,7 +44,13 @@ function displayTokens(data) {
       }
       buffer = '';
     }
+
+    if (char === '\n') {
+      numberOfLines += 1;
+    }
   }
+
+  displayLineNumbers(numberOfLines);
 }
 
 fileInput.addEventListener('change', async () => {

@@ -9,14 +9,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parsing Visualizer</title>
+  <link rel="stylesheet" href="css/style.css">
   <script src="js/tokenizer.js" defer></script>
 </head>
 
 <body>
-  <h1>Parsing Visualizer</h1>
-  <input id="file-input" type="file" accept=".json">
+  <header>
+    <h1>Parsing Visualizer</h1>
+    <input class="file-input" type="file" accept=".json">
+  </header>
 
-  <pre id="token-output" style="font-family: consolas;"></pre>
+  <main>
+    <pre class="source-line-numbers"></pre>
+    <pre class="token-output"></pre>
+  </main>
+
+  <footer>
+    <p>Copyright &copy; 2020 Michel Fäh</p>
+  </footer>
 
 </body>
 
