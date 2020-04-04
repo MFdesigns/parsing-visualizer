@@ -7,12 +7,12 @@
 body {
   display: grid;
   height: 100vh;
-  grid-template-columns: 100%;
+  grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
-  "header"
-  "main"
-  "footer"
+  "header header"
+  "tokens token-list"
+  "footer footer"
   ;
 }
 
@@ -20,23 +20,21 @@ header {
   grid-area: header;
 }
 
-main {
-  display: grid;
-  grid-area: main;
-  grid-template-columns: auto 1fr auto;
-  grid-template-rows: 100%;
-  grid-template-areas:
-  "line-numbers source token-list"
-  ;
+.tokens {
+  grid-area: tokens;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
 }
 
-.source-line-numbers {
-  grid-area: line-numbers;
+.token-list {
+  grid-area: token-list;
 }
 
-.token-output {
-  grid-area: source;
+.token-list-color {
+  height: 20px;
+  width: 20px;
+  border: 2px solid black;
 }
 
 footer {

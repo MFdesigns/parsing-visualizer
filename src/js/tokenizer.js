@@ -3,9 +3,38 @@
  */
 
 const fileInput = document.getElementsByClassName('file-input')[0];
+let tokenDefinitons = [];
+
+function createTokenClasses(data) {
+  tokenDefinitons = [];
+  for (let i = 0; i < data.tokenDefs.length; i += 1) {
+    const randomId = Math.floor(Math.random() * 1000 + 1000);
+    const tokenDef = {
+      name: data.tokenDefs[i].name,
+      color: data.tokenDefs[i].color,
+      class: `${data.tokenDefs[i].name.toLowerCase()}-${randomId}`,
+    };
+    tokenDefinitons.push(tokenDef);
+  }
+}
+
+function displayTokenList() {
+  const tokenList = document.querySelector('.token-list > ul');
+  for (let i = 0; i < tokenDefinitons.length; i += 1) {
+    const tokenLi = document.createElement('li');
+    tokenLi.textContent = tokenDefinitons[i].name;
+
+    const tokenColor = document.createElement('div');
+    tokenColor.classList.add('token-list-color');
+    tokenColor.style.backgroundColor = tokenDefinitons[i].color;
+
+    tokenLi.appendChild(tokenColor);
+    tokenList.appendChild(tokenLi);
+  }
+}
 
 function displayLineNumbers(numberOfLines) {
-  const sourceLineNumbers = document.getElementsByClassName('source-line-numbers')[0];
+  const sourceLineNumbers = document.getElementsByClassName('tokens__line-numbers')[0];
   const maxWidth = numberOfLines.toString().length;
 
   for (let i = 0; i < numberOfLines; i += 1) {
@@ -15,7 +44,7 @@ function displayLineNumbers(numberOfLines) {
 }
 
 function displayTokens(data) {
-  const tokenOutput = document.getElementsByClassName('token-output')[0];
+  const tokenOutput = document.getElementsByClassName('tokens__output')[0];
 
   let buffer = '';
   let tokenIndex = 0;
@@ -57,5 +86,7 @@ fileInput.addEventListener('change', async () => {
   const file = fileInput.files[0];
   const text = await file.text();
   const json = JSON.parse(text);
+  createTokenClasses(json);
+  displayTokenList();
   displayTokens(json);
 });
