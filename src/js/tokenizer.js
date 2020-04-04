@@ -2,7 +2,6 @@
  * Copyright (c) 2020 Michel Fäh
  */
 
-const fileInput = document.getElementsByClassName('file-input')[0];
 let tokenDefinitons = [];
 
 function createTokenClasses(data) {
@@ -19,23 +18,26 @@ function createTokenClasses(data) {
 }
 
 function displayTokenList() {
-  const tokenList = document.querySelector('.token-list > ul');
+  const tokenList = document.getElementsByClassName('token-list')[0];
+  const tokenItemTemp = document.getElementsByClassName('token-item-template')[0];
+
+  // Clear token list
+  tokenList.innerHTML = '';
+
   for (let i = 0; i < tokenDefinitons.length; i += 1) {
-    const tokenLi = document.createElement('li');
-    tokenLi.textContent = tokenDefinitons[i].name;
-
-    const tokenColor = document.createElement('div');
-    tokenColor.classList.add('token-list-color');
-    tokenColor.style.backgroundColor = tokenDefinitons[i].color;
-
-    tokenLi.appendChild(tokenColor);
-    tokenList.appendChild(tokenLi);
+    const item = tokenItemTemp.content.cloneNode(true);
+    item.querySelector('.token-list__item__text').textContent = tokenDefinitons[i].name;
+    item.querySelector('.token-list__item__color').style.backgroundColor = tokenDefinitons[i].color;
+    tokenList.appendChild(item);
   }
 }
 
 function displayLineNumbers(numberOfLines) {
   const sourceLineNumbers = document.getElementsByClassName('tokens__line-numbers')[0];
   const maxWidth = numberOfLines.toString().length;
+
+  // Clear line numbers
+  sourceLineNumbers.innerHTML = '';
 
   for (let i = 0; i < numberOfLines; i += 1) {
     const lineNumber = (i + 1).toString().padStart(maxWidth, ' ');
@@ -45,6 +47,10 @@ function displayLineNumbers(numberOfLines) {
 
 function displayTokens(data) {
   const tokenOutput = document.getElementsByClassName('tokens__output')[0];
+  const tokenFragment = document.createDocumentFragment();
+
+  // Clear token output
+  tokenOutput.innerHTML = '';
 
   let buffer = '';
   let tokenIndex = 0;
@@ -55,7 +61,9 @@ function displayTokens(data) {
     const token = data.tokens[tokenIndex];
 
     if (i === token.start) {
-      tokenOutput.innerHTML += buffer;
+      const span = document.createElement('span');
+      span.textContent = buffer;
+      tokenFragment.appendChild(span);
       buffer = '';
     }
 
@@ -65,8 +73,9 @@ function displayTokens(data) {
       const tokenColor = data.tokenDefs[token.type].color;
       const tokenElement = document.createElement('span');
       tokenElement.style.backgroundColor = tokenColor;
+      tokenElement.classList.add('token-item');
       tokenElement.textContent = buffer;
-      tokenOutput.appendChild(tokenElement);
+      tokenFragment.appendChild(tokenElement);
 
       if (tokenIndex < data.tokens.length - 1) {
         tokenIndex += 1;
@@ -77,13 +86,15 @@ function displayTokens(data) {
     if (char === '\n') {
       numberOfLines += 1;
     }
+
+    tokenOutput.appendChild(tokenFragment);
   }
 
   displayLineNumbers(numberOfLines);
 }
 
-fileInput.addEventListener('change', async () => {
-  const file = fileInput.files[0];
+document.getElementsByClassName('file-input')[0].addEventListener('change', async (event) => {
+  const file = event.currentTarget.files[0];
   const text = await file.text();
   const json = JSON.parse(text);
   createTokenClasses(json);

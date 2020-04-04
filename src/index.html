@@ -23,14 +23,24 @@
     <pre class="tokens__line-numbers"></pre>
     <pre class="tokens__output"></pre>
   </div>
-  <div class="token-list">
-    <ul>
-    </ul>
+  <div class="token-list-container">
+    <h2>Tokens</h2>
+    <div class="token-list-overflow">
+      <ul class="token-list"></ul>
+    </div>
   </div>
 
   <footer>
     <p>Copyright &copy; 2020 Michel Fäh</p>
   </footer>
+
+  <template class="token-item-template">
+    <li class="token-list__item">
+      <input type="checkbox" class="token-list__item__checkbox" checked>
+      <div class="token-list__item__color"></div>
+      <span class="token-list__item__text"></span>
+    </li>
+  </template>
 
 </body>
 

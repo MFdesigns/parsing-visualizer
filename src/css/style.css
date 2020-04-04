@@ -4,6 +4,23 @@
   margin: 0;
 }
 
+@font-face {
+  src: url("../res/louis_george_cafe.ttf");
+  font-family: Cafe;
+}
+@font-face {
+  font-family: Code;
+  src: url('../res/fira_code_regular.woff2') format('woff2'),
+    url("../res/fira_code_regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  font-family: Cafe;
+  color: white;
+}
+
 body {
   display: grid;
   height: 100vh;
@@ -14,10 +31,25 @@ body {
   "tokens token-list"
   "footer footer"
   ;
+  background-color: #202020;
 }
 
 header {
   grid-area: header;
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+}
+
+h2 {
+  margin: 10px 0 20px 0;
+}
+
+pre {
+  font-family: Code;
+  font-size: 14px;
 }
 
 .tokens {
@@ -25,18 +57,48 @@ header {
   overflow-y: scroll;
   display: flex;
   flex-direction: row;
+  padding: 20px;
+}
+
+.tokens__line-numbers {
+  padding: 0 10px 0 10px;
+}
+
+.token-item {
+  color: black;
+}
+
+.token-list-container {
+  grid-area: token-list;
+  padding: 20px;
+  border-left: 5px solid black;
+}
+
+.token-list-overflow {
+  overflow-y: scroll;
+  padding: 0 10px 0 0;
 }
 
 .token-list {
-  grid-area: token-list;
+  list-style: none;
 }
 
-.token-list-color {
+.token-list__item {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 0 0 10px 0;
+}
+
+.token-list__item__color {
   height: 20px;
   width: 20px;
-  border: 2px solid black;
+  border: 2px solid white;
+  margin: 0 10px 0 10px;
 }
 
 footer {
   grid-area: footer;
+  padding: 10px;
+  background-color: black;
 }
