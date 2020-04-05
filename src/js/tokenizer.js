@@ -58,7 +58,7 @@ function displayTokens(data) {
   let numberOfLines = 0;
 
   for (let i = 0; i < data.source.length; i += 1) {
-    const char = data.source.charAt(i);
+    let char = data.source.charAt(i);
     const token = data.tokens[tokenIndex];
 
     if (i === token.start) {
@@ -68,6 +68,11 @@ function displayTokens(data) {
       buffer = '';
     }
 
+    if (char === '\n') {
+      // Replace with visible char
+      numberOfLines += 1;
+      char = '↴\n';
+    }
     buffer += char;
 
     if (i + 1 === token.start + token.length) {
@@ -82,11 +87,8 @@ function displayTokens(data) {
       }
       buffer = '';
     }
-    if (char === '\n') {
-      numberOfLines += 1;
-    }
-    tokenOutput.appendChild(tokenFragment);
   }
+  tokenOutput.appendChild(tokenFragment);
   displayLineNumbers(numberOfLines);
 }
 
