@@ -52,6 +52,10 @@ pre {
   font-size: 14px;
 }
 
+pre > span {
+  line-height: 14px;
+}
+
 .tokens {
   grid-area: tokens;
   overflow-y: scroll;
